@@ -28,6 +28,12 @@ Hello World
 1. [注册并开通免费额度](https://fanyi-api.baidu.com/api/trans/product/desktop)
 2. 在[控制台](https://fanyi-api.baidu.com/manage/apiKey)获取 API Key
 
+**安装 Agent Skills（推荐）**
+
+```bash
+npx skills add https://github.com/baidu-translate/trans-cli
+```
+
 **安装 CLI**
 
 ```bash
@@ -65,16 +71,16 @@ trans config set api_key your_api_key_here
 | 子命令 | 描述 | 状态 |
 |--------|------|------|
 | `trans text` | 文本翻译，支持 200+ 语种互译 | 可用 |
+| `trans file` | 文件翻译，支持 docx/pdf/xlsx/pptx/md 等格式 | 可用 |
 | `trans config` | 初始化和管理配置 | 可用 |
 | `trans doctor` | 自检：API Key、网络连通性、账户状态 | 可用 |
-| `trans doc` | 文档翻译 | 即将支持 |
 | `trans image` | 图片翻译 / OCR | 即将支持 |
 | `trans audio` | 语音翻译 | 即将支持 |
 
 ### 使用示例
 
 ```bash
-# 基本翻译（自动检测源语言）
+# 文本翻译（自动检测源语言）
 trans text "你好世界"
 
 # 指定目标语言
@@ -85,6 +91,12 @@ echo "今天天气真好" | trans text
 
 # JSON 输出（适合脚本集成）
 trans text "你好" --json
+
+# 提交文件翻译任务
+trans file submit report.pdf --to en
+
+# 查询翻译状态（完成后下载）
+trans file query <requestId> --download
 ```
 
 ---
@@ -126,6 +138,8 @@ trans text "你好" --json
 | `NETWORK_ERROR` | 网络不可达 | 检查网络连接 |
 | `INVALID_INPUT` | 输入为空或非法 | 检查输入内容 |
 | `INVALID_LANGUAGE` | 不支持的语言代码 | 查阅[支持语种列表](https://fanyi-api.baidu.com/doc/21) |
+| `DOC_FAILED` | 文件翻译任务在服务端失败 | 检查文件格式和内容（仅 `trans file`） |
+| `WAIT_TIMEOUT` | `--wait` 超时，任务可能仍在运行 | 用 `trans file query <requestId>` 继续查询（仅 `trans file`） |
 | `API_ERROR` | 其他 API 错误 | 重试，或联系支持 |
 
 ---
@@ -135,6 +149,12 @@ trans text "你好" --json
 支持 200+ 语种互译，覆盖 4 万多个语言方向，源语言支持自动检测。
 
 完整语种列表：[fanyi-api.baidu.com/doc/21](https://fanyi-api.baidu.com/doc/21)
+
+---
+
+## 许可证
+
+[MIT](LICENSE)
 
 ---
 
