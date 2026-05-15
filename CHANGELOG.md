@@ -6,6 +6,10 @@
 
 ## [Unreleased]
 
+---
+
+## [1.1.1] - 2026-05-15
+
 ### Added
 - `trans file` 文件翻译命令（submit / query），支持 docx/pdf/xlsx/pptx/md 等格式
 - Agent Skills 支持：`npx skills add https://github.com/baidu-translate/trans-cli`
