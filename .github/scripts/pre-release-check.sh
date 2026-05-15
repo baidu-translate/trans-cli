@@ -106,6 +106,14 @@ fi
 _sep "commit 账号信息检测"
 
 LAST_MSG=$(git log -1 --pretty=%B 2>/dev/null || true)
+LAST_AUTHOR=$(git log -1 --pretty='%an <%ae>' 2>/dev/null || true)
+
+# committer 必须是 baidu-translate（禁止暴露机器用户名）
+if echo "$LAST_AUTHOR" | grep -qE '^baidu-translate '; then
+  _ok "committer 身份正确：$LAST_AUTHOR"
+else
+  _err "committer 身份异常（发现机器用户名）：$LAST_AUTHOR，请运行 git config user.name 'baidu-translate'"
+fi
 
 # 禁止 Co-Authored-By / Signed-off-by 含真实邮箱
 if echo "$LAST_MSG" | grep -iE '(co-authored-by|signed-off-by):\s*.+@'; then

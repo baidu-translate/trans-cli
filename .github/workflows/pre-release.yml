@@ -18,6 +18,15 @@ jobs:
           chmod +x .github/scripts/pre-release-check.sh
           bash .github/scripts/pre-release-check.sh
 
+      - name: 检查 committer 身份不暴露机器用户名
+        run: |
+          AUTHOR=$(git log -1 --pretty='%an')
+          if [ "$AUTHOR" != "baidu-translate" ]; then
+            echo "[FAIL] committer 身份异常：$AUTHOR，应为 baidu-translate"
+            exit 1
+          fi
+          echo "[PASS] committer 身份正确：$AUTHOR"
+
       - name: 检查 commit message 不含用户名/邮箱
         run: |
           MSG=$(git log -1 --pretty=%B)
