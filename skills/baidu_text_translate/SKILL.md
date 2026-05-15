@@ -1,8 +1,8 @@
 ---
 name: baidu-text-translate
-description: Use this skill whenever you need to translate text with the trans-cli tool (Baidu Translation AI API). Covers JSON output contract, Baidu-specific language codes (jp/kor/fra/spa/ara — not ISO defaults), exit code semantics, error decision tree, first-time API key setup, QUOTA_EXCEEDED / AUTH_FAILED recovery, environment self-diagnosis via `trans doctor`, and listing supported languages via `trans languages`. Trigger on any of: running `trans text`, shell pipelines with translation, trans-cli errors, API key configuration, `trans doctor` checks, or looking up language codes.
+description: "Use this skill whenever you need to translate text with the trans-cli tool (Baidu Translation AI API). Covers JSON output contract, Baidu-specific language codes (jp/kor/fra/spa/ara — not ISO defaults), exit code semantics, error decision tree, first-time API key setup, QUOTA_EXCEEDED / AUTH_FAILED recovery, environment self-diagnosis via `trans doctor`, and listing supported languages via `trans languages`. Trigger on any of: running `trans text`, shell pipelines with translation, trans-cli errors, API key configuration, `trans doctor` checks, or looking up language codes."
 homepage: https://fanyi.baidu.com
-metadata: {"clawdbot":{"emoji":"🌐","requires":{"bins":["trans"],"env":["TRANS_API_KEY"]},"install":[{"id":"npm","kind":"npm","package":"@bdtrans/trans-cli","bins":["trans"],"label":"Install trans-cli (npm)"}]}}
+metadata: '{"clawdbot":{"emoji":"🌐","requires":{"bins":["trans"],"env":["TRANS_API_KEY"]},"install":[{"id":"npm","kind":"npm","package":"@bdtrans/trans-cli","bins":["trans"],"label":"Install trans-cli (npm)"}]}}'
 ---
 
 # baidu-text-translate — Agent Reference
