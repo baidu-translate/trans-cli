@@ -1,0 +1,42 @@
+name: Pre-release Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  pre-release:
+    name: 文档 / 安全 / 敏感信息检查
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 运行发布前检查
+        run: |
+          chmod +x .github/scripts/pre-release-check.sh
+          bash .github/scripts/pre-release-check.sh
+
+      - name: 检查 commit message 不含用户名/邮箱
+        run: |
+          MSG=$(git log -1 --pretty=%B)
+          # 禁止 Co-Authored-By / Signed-off-by
+          if echo "$MSG" | grep -iE '(co-authored-by|signed-off-by):\s*.+@'; then
+            echo "[FAIL] commit message 含身份邮箱 trailer"
+            exit 1
+          fi
+          # 禁止手机号
+          if echo "$MSG" | grep -E '\b1[3-9][0-9]{9}\b'; then
+            echo "[FAIL] commit message 含手机号"
+            exit 1
+          fi
+          echo "[PASS] commit message 无敏感账号信息"
+
+      - name: 检查 CLAUDE.md 未被提交
+        run: |
+          if git ls-files | grep -q '^CLAUDE\.md$'; then
+            echo "[FAIL] CLAUDE.md 不应提交到仓库"
+            exit 1
+          fi
+          echo "[PASS] CLAUDE.md 未入库"
